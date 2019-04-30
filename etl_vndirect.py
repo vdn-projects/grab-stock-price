@@ -177,7 +177,7 @@ def main(n_days=4):
     load_historical_price(config.download_path, logger)
 
     # Clean csv remaing if any after download
-    delete_files(config.download_path, "*.csv")
+    # delete_files(config.download_path, "*.csv")
 
 
 if __name__ == "__main__":
