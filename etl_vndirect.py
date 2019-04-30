@@ -37,7 +37,7 @@ def confirm_download(driver):
 def initialize():
     # Virtual display is used for VPS only, for local test it is diabled
     display = None
-    if not config.local_test:
+    if config.use_virtual_screen:
         from pyvirtualdisplay import Display
         display = Display(visible=0, size=(800, 600))
         display.start()
@@ -48,7 +48,10 @@ def initialize():
     options.add_argument('--no-sandbox')
     prefs = {"download.default_directory": config.download_path}
     options.add_experimental_option("prefs", prefs)
-    driver = webdriver.Chrome(chrome_options=options)
+    # options.add_argument('headless')
+    # options.add_argument('window-size=1200x600')
+    driver = webdriver.Chrome(
+        executable_path='/usr/local/bin/chromedriver', chrome_options=options)
     driver.get(url)
 
     return display, driver
@@ -95,7 +98,7 @@ def process(driver, ticker_code, from_date, to_date, logger):
 def quit(display, driver):
     driver.close()
     driver.quit()
-    if not config.local_test:
+    if config.use_virtual_screen:
         display.stop()
 
 
@@ -177,7 +180,7 @@ def main(n_days=4):
     load_historical_price(config.download_path, logger)
 
     # Clean csv remaing if any after download
-    # delete_files(config.download_path, "*.csv")
+    delete_files(config.download_path, "*.csv")
 
 
 if __name__ == "__main__":

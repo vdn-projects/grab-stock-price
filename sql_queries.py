@@ -53,7 +53,7 @@ close = %s, open = %s, high = %s, low = %s, volume = %s
 
 # Select statement
 get_ticker_list = """
-SELECT ticker_code FROM ticker LIMIT 3
+SELECT ticker_code FROM ticker
 """
 
 
